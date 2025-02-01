@@ -1,0 +1,104 @@
+`ifndef DEFINE_STATE
+
+// for top state - we have more states than needed
+typedef enum logic [1:0] {
+	S_IDLE,
+	S_UART_RX,
+	S_S_CONVERSION,
+	S_YUVtoRGB
+} top_state_type;
+
+typedef enum logic [3:0] {
+	S_RXC_IDLE,
+	S_RXC_SYNC,
+	S_RXC_ASSEMBLE_DATA,
+	S_RXC_STOP_BIT
+} RX_Controller_state_type;
+
+typedef enum logic [3:0] {
+	S_US_IDLE,
+	S_US_STRIP_FILE_HEADER_1,
+	S_US_STRIP_FILE_HEADER_2,
+	S_US_START_FIRST_BYTE_RECEIVE,
+	S_US_WRITE_FIRST_BYTE,
+	S_US_START_SECOND_BYTE_RECEIVE,
+	S_US_WRITE_SECOND_BYTE
+} UART_SRAM_state_type;
+
+typedef enum logic [3:0] {
+	S_VS_WAIT_NEW_PIXEL_ROW,
+	S_VS_NEW_PIXEL_ROW_DELAY_1,
+	S_VS_NEW_PIXEL_ROW_DELAY_2,
+	S_VS_NEW_PIXEL_ROW_DELAY_3,
+	S_VS_NEW_PIXEL_ROW_DELAY_4,
+	S_VS_NEW_PIXEL_ROW_DELAY_5,
+	S_VS_FETCH_PIXEL_DATA_0,
+	S_VS_FETCH_PIXEL_DATA_1,
+	S_VS_FETCH_PIXEL_DATA_2,
+	S_VS_FETCH_PIXEL_DATA_3
+} VGA_SRAM_state_type;
+
+typedef enum logic [4:0] {
+	S_INIT_0,
+	S_INIT_1,
+	S_INIT_2,
+	S_INIT_3,
+	S_INIT_4,
+	S_INIT_5,
+	S_INIT_6,
+	S_INIT_7,
+	S_CONVERT_RGB_0,
+	S_CONVERT_RGB_1,
+	S_CALC_U,
+	S_CALC_V,
+	S_CONVERT_RGB_2,
+	S_CONVERT_RGB_3,
+	S_LEAD_OUT_0,
+	S_LEAD_OUT_1,
+	S_NEXT_PIXEL
+} M1_state_type;
+    
+typedef enum logic [4:0] {
+	// Top Level States
+	S_M2_INIT_0,
+	S_M2_INIT_1,
+	S_M2_COMMON_0,
+	S_M2_COMMON_1,
+	S_M2_END_0,
+	S_M2_END_1,
+	S_IDLE_0,		//Fetch State
+	S_IDLE_1,
+	S_IDLE_2,
+	S_IDLE_3,
+	S_READ_0,
+	S_READ_STORE,
+	S_READ_END,
+	S_GET_T,			// Compute T
+	S_IDLE_T0,
+	S_IDLE_T1,
+	S_CALC_T0,
+	S_CALC_T1,
+	S_CALC_T2,
+	S_END_T,
+	S_GET_S,		// Compute S
+	S_IDLE_S0,
+	S_CALC_S0,
+	S_CALC_S1,
+	S_CALC_S2,
+	S_S_LEAD_OUT_0,
+	S_S_LEAD_OUT_1,
+	S_STORE_END			// Write S
+} M2_state_type;
+
+parameter 
+   VIEW_AREA_LEFT = 160,
+   VIEW_AREA_RIGHT = 480,
+   VIEW_AREA_TOP = 120,
+   VIEW_AREA_BOTTOM = 360,
+	U_BASE_ADDRESS = 18'd38400,
+	V_BASE_ADDRESS = 18'd57600,
+	RGB_BASE_ADDRESS = 18'd146944,
+	S_PRIME_BASE_ADDRESS = 18'd76800;
+
+`define DEFINE_STATE 1
+`endif
